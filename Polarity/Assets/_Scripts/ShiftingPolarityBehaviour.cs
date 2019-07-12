@@ -4,10 +4,19 @@ using UnityEngine;
 
 public class ShiftingPolarityBehaviour : PolarityBehaviour
 {
-    [SerializeField]
-    float lerp_t = 0f;
+    private static float _lerpT = 5f;
 
     private Color _targetColor = Color.white;
+
+    private void OnEnable()
+    {
+        EventManager.OnPolarShift += ShiftPolarity;     
+    }
+
+    private void OnDisable()
+    {
+        EventManager.OnPolarShift -= ShiftPolarity;     
+    }
 
     protected override void Start()
     {
@@ -17,7 +26,7 @@ public class ShiftingPolarityBehaviour : PolarityBehaviour
 
     private void Update()
     {
-        _renderer.color = Color.Lerp(_renderer.color, _targetColor, lerp_t * Time.deltaTime);
+        _renderer.color = Color.Lerp(_renderer.color, _targetColor, _lerpT * Time.deltaTime);
     }
 
 
