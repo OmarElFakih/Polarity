@@ -4,8 +4,16 @@ using UnityEngine;
 
 public class Token : PolarityBehaviour
 {
+    public static float fallSpeed;
+
+
     [SerializeField]
     private GameObject _beat = null;
+
+    private void Update()
+    {
+        transform.Translate(Vector3.down * fallSpeed * Time.deltaTime);
+    }
 
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -25,6 +33,8 @@ public class Token : PolarityBehaviour
             GameManager.instance.Hurt();
             Debug.Log("Hurt");
         }
+
+        Destroy(this.gameObject);
     }
 
 }
