@@ -95,9 +95,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _polarity: 1
-  _onColor: {r: 1, g: 0, b: 0, a: 1}
-  _offColor: {r: 0, g: 0.003921569, b: 1, a: 1}
-  _beat: {fileID: 7313186741426413964, guid: f7dc1aac3baee104cbfe7e1c8aca464b, type: 3}
+  _beat: {fileID: 3919581604951677727, guid: f7dc1aac3baee104cbfe7e1c8aca464b, type: 3}
 --- !u!61 &-1035079711066403155
 BoxCollider2D:
   m_ObjectHideFlags: 0

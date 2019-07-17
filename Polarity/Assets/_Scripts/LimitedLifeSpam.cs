@@ -5,12 +5,12 @@ using UnityEngine;
 public class LimitedLifeSpam : MonoBehaviour
 {
     [SerializeField]
-    private float lifespam = 0f;
+    private float _lifespam = 0f;
 
 
     void Start()
     {
-        Destroy(this.gameObject, lifespam);
+        Destroy(this.gameObject, _lifespam);
     }
 
   
