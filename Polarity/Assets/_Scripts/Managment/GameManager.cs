@@ -8,8 +8,8 @@ public class GameManager : MonoBehaviour
 
     public static GameManager instance = null;
 
-    [SerializeField]
-    private AudioMixerSnapshot[] _snapshots = null;//used for audio transitions
+   // [SerializeField]
+   // private AudioMixerSnapshot[] _snapshots = null;//used for audio transitions
 
     private int _index = 0;//used to select the corresponding snapshot
 
@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
 
     public void GameStart()
     {
-        _snapshots[0].TransitionTo(.5f);
+       // _snapshots[0].TransitionTo(.5f);
         Token.fallSpeed = _initialSpeed;
     }
 
@@ -74,10 +74,10 @@ public class GameManager : MonoBehaviour
         {
             _consecutiveCatches = 0;
 
-            if (_index < (_snapshots.Length -1))
+           /* if (_index < (_snapshots.Length -1))
                 _index++;
 
-            _snapshots[_index].TransitionTo(.5f);
+            _snapshots[_index].TransitionTo(.5f);*/
         }
     }
 
@@ -90,10 +90,10 @@ public class GameManager : MonoBehaviour
         {
             _consecutiveCatches = _catchesToUpgrade/2;
 
-            if (_index > 0)
-                _index--;
+            //if (_index > 0)
+           //     _index--;
 
-            _snapshots[_index].TransitionTo(.5f);
+          //  _snapshots[_index].TransitionTo(.5f);
         }
     }
 }
