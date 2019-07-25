@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Token : PolarityBehaviour
 {
-    public static float fallSpeed;
+    public static float fallSpeed = 1000f;
 
 
     [SerializeField]
@@ -24,7 +24,7 @@ public class Token : PolarityBehaviour
         {
             //score
             GameManager.instance.Score();
-            Instantiate(_beat, Vector3.zero, Quaternion.identity);
+            Instantiate(_beat, transform.position, Quaternion.identity);
             Debug.Log("Score");
         }
         else
@@ -34,7 +34,7 @@ public class Token : PolarityBehaviour
             Debug.Log("Hurt");
         }
 
-        Destroy(this.gameObject);
+        Destroy(this.gameObject, 1f);
     }
 
 }

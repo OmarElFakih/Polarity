@@ -7,7 +7,7 @@ public class Instantiator : MonoBehaviour
     public GameObject[] prefabs;
    
 
-    public void InstantiateRoutine(int index)
+    public void SpecificInstance(int index)
     {
         Instantiate(prefabs[index], transform.position, Quaternion.identity);
     }

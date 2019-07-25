@@ -63,11 +63,13 @@ public class GameManager : MonoBehaviour
     {
         _consecutiveCatches++;
 
-        float _newFallSpeed = Mathf.Lerp(Token.fallSpeed, _maxSpeed, _lerpT);
+        float _newFallSpeed = Mathf.Lerp(Token.fallSpeed, _maxSpeed, _lerpT * Time.deltaTime);
 
         Token.fallSpeed = (_consecutiveMisses > 3) ? _currentSpeedSave : _newFallSpeed;
 
         _consecutiveMisses = 0;
+
+        _currentSpeedSave = Token.fallSpeed;
 
 
         if (_consecutiveCatches >= _catchesToUpgrade)
@@ -83,7 +85,7 @@ public class GameManager : MonoBehaviour
 
     public void Hurt()
     {
-        _consecutiveCatches--;
+        _consecutiveCatches = 0;
         _consecutiveMisses++;
 
         if (_consecutiveCatches <= 0)
