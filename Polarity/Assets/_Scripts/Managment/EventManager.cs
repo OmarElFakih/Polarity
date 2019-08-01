@@ -15,6 +15,9 @@ public class EventManager : MonoBehaviour
     [SerializeField]
     private LayerMask inputLayer = default;
 
+    
+    private Polarity _currentPolarity = Polarity.Off;
+
     private void Awake()
     {
         if (instance == null)
@@ -39,24 +42,24 @@ public class EventManager : MonoBehaviour
 
         #if UNITY_STANDALONE || UNITY_WEBGL ||UNITY_EDITOR
 
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(0))
         {
             origin = Camera.main.ScreenToViewportPoint(Input.mousePosition);
         }
         #elif UNITY_ANDROID
         if(Input.touchCount > 0)
         {
-            origin = Camera.main.ScreenToViewportPoint(Input.touches[0].position);
+            if (Input.touches[0].phase == TouchPhase.Began)
+            {
+                origin = Camera.main.ScreenToViewportPoint(Input.touches[0].position);
+            }
         }
         #endif
 
-        if (Physics2D.Raycast(origin, Vector2.zero, inputLayer))
+        if (Physics2D.Raycast(origin, Vector2.zero, inputLayer) && (origin != Vector3.up * 100))
         {
-            OnPolarShift(Polarity.On);
-        }
-        else
-        {
-            OnPolarShift(Polarity.Off);
+            _currentPolarity = (_currentPolarity == Polarity.On) ? Polarity.Off : Polarity.On;
+            OnPolarShift(_currentPolarity);
         }
     }
 

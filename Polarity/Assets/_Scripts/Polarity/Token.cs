@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Token : PolarityBehaviour
 {
-    public static float fallSpeed = 1000f;
+    public static float fallSpeed = 1f;
 
 
     [SerializeField]
@@ -12,7 +12,7 @@ public class Token : PolarityBehaviour
 
     private void Update()
     {
-        transform.Translate(Vector3.down * fallSpeed * Time.deltaTime);
+        transform.position += Vector3.down * fallSpeed * Time.deltaTime;
     }
 
 
@@ -30,7 +30,7 @@ public class Token : PolarityBehaviour
         else
         {
             //hurt
-            GameManager.instance.Hurt();
+            GameManager.instance.GameOver();
             Debug.Log("Hurt");
         }
 

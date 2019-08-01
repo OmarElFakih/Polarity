@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.LWRP;
 
 public class ShiftingPolarityBehaviour : PolarityBehaviour
 {
-    private static float _lerpT = 5f;
+    private static float _lerpT = 3f;
 
     [SerializeField]
     protected Color _onColor = Color.white;
@@ -13,6 +14,8 @@ public class ShiftingPolarityBehaviour : PolarityBehaviour
     protected Color _offColor = Color.white;
 
     private Color _targetColor = Color.white;
+
+    private bool _isShifting = false;
 
     private void OnEnable()
     {
@@ -26,22 +29,22 @@ public class ShiftingPolarityBehaviour : PolarityBehaviour
 
     protected override void Start()
     {
-        _renderer = GetComponent<SpriteRenderer>();
+        _light = GetComponent<Light2D>();
 
-        if (_renderer != null)
+        if (_light != null)
         {
-            _renderer.color = (_polarity == Polarity.On) ? _onColor : _offColor;
+            _light.color = (_polarity == Polarity.On) ? _onColor : _offColor;
         }
 
         else Debug.Log("renderer is null");
 
-        _targetColor = _renderer.color;
+        _targetColor = _light.color;
     }
 
-    private void Update()
+  /*  private void Update()
     {
-        _renderer.color = Color.Lerp(_renderer.color, _targetColor, _lerpT * Time.deltaTime);
-    }
+        _light.color = Color.Lerp(_light.color, _targetColor, _lerpT * Time.deltaTime);
+    }*/
 
 
     public void ShiftPolarity(Polarity pol)
@@ -49,6 +52,26 @@ public class ShiftingPolarityBehaviour : PolarityBehaviour
         _polarity = pol;
 
         _targetColor = (_polarity == Polarity.On) ? _onColor : _offColor;
+
+        if (!_isShifting)
+        {
+            StartCoroutine(ShiftRoutine());
+        }
+    }
+
+
+
+    private IEnumerator ShiftRoutine()
+    {
+        _isShifting = true;
+
+        while (_light.color != _targetColor)
+        {
+            _light.color = Color.Lerp(_light.color, _targetColor, _lerpT * Time.deltaTime);
+            yield return null;
+        }
+
+        _isShifting = false;
     }
 
 
