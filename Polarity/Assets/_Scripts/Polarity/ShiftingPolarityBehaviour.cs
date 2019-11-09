@@ -19,12 +19,12 @@ public class ShiftingPolarityBehaviour : PolarityBehaviour
 
     private void OnEnable()
     {
-        EventManager.OnPolarShift += ShiftPolarity;     
+        InputListener.OnPolarShift += ShiftPolarity;     
     }
 
     private void OnDisable()
     {
-        EventManager.OnPolarShift -= ShiftPolarity;     
+        InputListener.OnPolarShift -= ShiftPolarity;     
     }
 
     protected override void Start()

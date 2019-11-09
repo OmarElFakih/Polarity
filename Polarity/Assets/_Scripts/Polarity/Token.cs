@@ -10,6 +10,17 @@ public class Token : PolarityBehaviour
     [SerializeField]
     private GameObject _beat = null;
 
+
+    private void OnEnable()
+    {
+        GameManager.OnGameOver += GameOverRoutine;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.OnGameOver -= GameOverRoutine;
+    }
+
     private void Update()
     {
         transform.position += Vector3.down * fallSpeed * Time.deltaTime;
@@ -23,18 +34,24 @@ public class Token : PolarityBehaviour
         if (contact.GetPolarity() == this._polarity)
         {
             //score
-            GameManager.instance.Score();
+            GameManager.OnScore();
             Instantiate(_beat, transform.position, Quaternion.identity);
-            Debug.Log("Score");
+
         }
         else
         {
             //hurt
-            GameManager.instance.GameOver();
-            Debug.Log("Hurt");
+            GameManager.OnGameOver();
+         
         }
 
         Destroy(this.gameObject, 1f);
     }
+
+    public void GameOverRoutine()
+    {
+        Destroy(this.gameObject);
+    }
+
 
 }

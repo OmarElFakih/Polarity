@@ -7,36 +7,72 @@ public class Timer : MonoBehaviour
 {
     public UnityEvent OnTimer;
 
-  
     [SerializeField]
-    private float _intervals = 0f;
+    private bool _loop = false;
+
+    [SerializeField]
+    private bool _executeOnStart = false;
+
+    [SerializeField]
+    private float _intervalLength = 0f;
+
+    public bool lerpIntervals;
 
     [SerializeField]
     private float _targetInterval = 0f;
 
+    [SerializeField]
+    private float _lerpT = 0;
+
     private float _nextTimer = 0f;
 
-    [SerializeField]
-    private float _lerpT;
+    public bool canExecute = true;
 
-    public bool _canExecute = true;
 
+    private void OnEnable()
+    {
+        _nextTimer = Time.time + _intervalLength;
+    }
 
     private void Awake()
     {
-        _nextTimer = Time.time + _intervals;
+        
+         //   _nextTimer = Time.time + _intervalLength;
+        
+    }
+
+
+    private void Start()
+    {
+        if (_executeOnStart)
+        {
+            OnTimer.Invoke();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Time.time > _nextTimer)
+        if (Time.time > _nextTimer && canExecute)
         {
             OnTimer.Invoke();
-            _intervals = Mathf.Lerp(_intervals, _targetInterval, _lerpT * Time.deltaTime);
-            _nextTimer = Time.time + _intervals; 
+
+            if (lerpIntervals)
+            {
+                _intervalLength = Mathf.Lerp(_intervalLength, _targetInterval, _lerpT * Time.deltaTime);
+            }
+
+            if (_loop)
+            {
+                _nextTimer = Time.time + _intervalLength;
+            }
         }
     }
 
+
+    public float PercentageLeft()
+    {
+        return (_nextTimer - Time.time) / _targetInterval;
+    }
 
 }
